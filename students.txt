@@ -1,1 +1,3 @@
-aclo  |  2021-0035  |  2  |  BSCS
+Carlo P. Arellano|2021-1235|2|BS Computer Science
+Mark Venus|2021-0022|2|BS Information Technology
+Romeo P. Aclo|2021-0035|2|BS Computer Application

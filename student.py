@@ -7,10 +7,6 @@ class Student:
 
 students = []
 
-# create text file and close it
-file = open("students.txt", "w")
-file.close()
-
 def add_student():
     name = input("Enter student name: ")
     id = input("Enter student ID: ")
@@ -19,21 +15,18 @@ def add_student():
     student = Student(name, id, year_level, course)
     students.append(student)
     print("Student added successfully.")
-    
-    # add new student to text file
-    file = open("students.txt", "a")
-    file.write(f"{name}  |  {id}  |  {year_level}  |  {course}\n")
-    file.close()
+
+    with open("students.txt", "a") as file:
+        file.write(f"{name}|{id}|{year_level}|{course}\n")
 
 def read_students():
-    file = open("students.txt", "r")
-    for line in file:
-        data = line.strip().split("|")
-        name, id, year_level, course = data
-        print(f"Student Name: {name}  ---  Student ID: {id}  ---  Student Year Level: {year_level}  ---  Student Course: {course}")
-    file.close()
+    with open("students.txt", "r") as file:
+        for line in file:
+            data = line.strip().split("|")
+            name, id, year_level, course = data
+            print(f"Student Name: {name}  ---  Student ID: {id}  ---  Student Year Level: {year_level}  ---  Student Course: {course}")
 
-def update_student(): 
+def update_student():
     id = input("Enter student ID to update: ")
     for student in students:
         if student.id == id:
@@ -41,11 +34,10 @@ def update_student():
             student.year_level = input("Enter new year level: ")
             student.course = input("Enter new course: ")
             print("Student updated successfully.")
-        
-            file = open("students.txt", "w")
-            for s in students:
-                file.write(f"{s.name}|{s.id}|{s.year_level}|{s.course}\n")
-            file.close()
+
+            with open("students.txt", "w") as file:
+                for s in students:
+                    file.write(f"{s.name}|{s.id}|{s.year_level}|{s.course}\n")
             return
     print("Student not found.")
 
@@ -55,20 +47,19 @@ def delete_student():
         if student.id == id:
             del students[i]
             print("Student deleted successfully.")
-            
-            file = open("students.txt", "w")
-            for s in students:
-                file.write(f"{s.name}|{s.id}|{s.year_level}|{s.course}\n")
-            file.close()
+
+            with open("students.txt", "w") as file:
+                for s in students:
+                    file.write(f"{s.name}|{s.id}|{s.year_level}|{s.course}\n")
             return
     print("Student not found.")
-    
+
 def search_student():
     search_term = input("Enter search term: ")
     found = False
     for student in students:
         if search_term.lower() in student.name.lower() or search_term.lower() in student.course.lower() or search_term == student.id:
-            print(f"Student Name: {student.name}\n Student ID: {student.id}\n Student Year Level: {student.year_level}\n Student Course: {student.course}\n")
+            print(f"Student Name: {student.name}\nStudent ID: {student.id}\nStudent Year Level: {student.year_level}\nStudent Course: {student.course}\n")
             found = True
     if not found:
         print("No matching results found.")
@@ -94,12 +85,13 @@ while True:
 
     elif choice == "4":
         delete_student()
-        
+
     elif choice == "5":
         search_student()
-        
+
     elif choice == "6":
         break
-    
-    else: 
+
+    else:
         print("Invalid Choice. Please try again.")
+

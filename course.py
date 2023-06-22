@@ -2,33 +2,33 @@ from asyncio import create_subprocess_exec
 
 
 class Course:
-    def __init__ (self, course_name, college):
+    def __init__ (self, course_name, course_code):
         self.course_name = course_name
-        self.college = college
+        self.course_code = course_code
         
         
 courses = []
 
-file = open("courses.txt", "w")
+file = open("courses.txt", "a")
 file.close()
 
 def add_course():
     course_name = input("Enter Course Name: ")
-    college = input("Enter College: ")
-    course = Course(course_name, college)
+    course_code = input("Enter Course Code: ")
+    course = Course(course_name, course_code)
     courses.append(course)
     print("Course Successfully Added.")
     
     file = open("courses.txt", "a")
-    file.write(f"{course_name} | {college}\n")
+    file.write(f"{course_name} | {course_code}\n")
     file.close()
     
 def read_course():
     file = open("courses.txt", "r")
     for line in file:
         data = line.strip().split("|")
-        course_name, college = data
-        print(f"Course: {course_name}  |   College: {college}\n")
+        course_name, course_code = data
+        print(f"Course: {course_name}  |   Course Code: {course_code}\n")
     file.close()
     
 def update_course():
@@ -36,12 +36,12 @@ def update_course():
     for course in courses:
         if course.course_name == course_name:
             course.course_name = input("Enter Course: ")
-            course.college = input("Enter College: ")
+            course.course_code = input("Enter Course Code: ")
             print("Course Updated Successfully")
             
             file = open("courses.txt", "w")
             for c in courses:
-                file.write(f"{c.course_name} | {c.college}\n")
+                file.write(f"{c.course_name} | {c.course_code}\n")
             file.close()
             return
     print("Course not found.")     
@@ -55,7 +55,7 @@ def delete_course():
             
             file = open("courses.txt", "w")
             for c in courses:
-                file.write(f"{c.course_name} | {c.college}\n")
+                file.write(f"{c.course_name} | {c.course_code}\n")
             file.close()
             return
     print("Course not found.") 
@@ -64,8 +64,8 @@ def search_course():
     search_term = input("Enter search term: ")
     found = False
     for course in courses:
-        if search_term.lower() in course.course_name.lower() or search_term.lower() in course.college.lower():
-            print(f"Course: {course.course_name} | College: {course.college}")
+        if search_term.lower() in course.course_name.lower() or search_term.lower() in course.course_code.lower():
+            print(f"Course: {course.course_name} | course_code: {course.course_code}")
             found = True
     if not found:
         print("No matching result found.")
